@@ -1,0 +1,50 @@
+{
+  "license": "MIT",
+  "name": "docker-node-express-boilerplate",
+  "description": "Boilerplate Dockerized Graphql app",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon --inspect=0.0.0.0:9229 ./src/index.js  --ext js,graphql --exec babel-node",
+    "test": "cross-env NODE_ENV=test nodemon -L --exec jest",
+    "update-schema": "prisma deploy && graphql get-schema -p prisma"
+  },
+  "jest": {
+    "globalSetup": "./jest/globalSetup.js",
+    "globalTeardown": "./jest/globalTeardown.js"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/register": "^7.9.0",
+    "@babel/runtime": "^7.9.2",
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "*",
+    "cross-env": "^7.0.2",
+    "dotenv": "8.2.0",
+    "graphql-cli": "^3.0.14",
+    "graphql-yoga": "^1.18.3",
+    "jest": "^25.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "7.4.3",
+    "prisma": "^1.34.10",
+    "prisma-binding": "^2.3.16"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "apollo-boost": "^0.4.7",
+    "babel-eslint": "^10.1.0",
+    "cross-fetch": "^3.0.4",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-eslint-plugin": "^2.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "graphql": "^14.6.0",
+    "nodemon": "^2.0.2 "
+  }
+}

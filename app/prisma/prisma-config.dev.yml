@@ -1,0 +1,12 @@
+port: 4466
+databases:
+  default:
+    connector: postgres
+    host: db
+    database: project_db
+    schema: public
+    user: postgres
+    password: password
+    port: 5432
+    rawAccess: true
+    migrations: true

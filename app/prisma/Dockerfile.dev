@@ -1,0 +1,3 @@
+FROM prismagraphql/prisma:1.34
+
+COPY prisma-config.dev.yml /home/prisma-config.yml

@@ -1,0 +1,67 @@
+# import * from './generated/prisma.graphql'
+
+type User {
+    id: ID!
+    email: String
+    password: String
+    name: String!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Query {
+    users(query: String): [User!]!
+    currentUser: User!
+}
+
+type Mutation {
+    createUser(data: CreateUserInput!): AuthPayload!
+    logInUser(data: LogInInput!): AuthPayload!
+    deleteUser: User!
+    updateUser(data: UpdateUserInput!): User!
+}
+
+type AuthPayload {
+    user: User!
+    token: String!
+}
+
+input LogInInput {
+    email: String!
+    password: String!
+}
+
+input UserWhereUniqueInput {
+    id: ID
+    email: String
+}
+
+input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input UpdateUserInput {
+    name: String
+    email: String
+    password: String!
+}
+
+input CreatePostInput {
+    title: String!
+    body: String!
+    published: Boolean
+}
+
+input UpdatePostInput {
+    title: String
+    body: String
+    published: Boolean
+}
+
+enum MutationType {
+    CREATED
+    UPDATED
+    DELETED
+}
