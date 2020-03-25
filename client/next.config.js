@@ -7,6 +7,16 @@ require('dotenv').config();
 
 module.exports = withImages(withCSS(
   withSass({
+    webpackDevMiddleware: (config) => {
+
+      config.watchOptions = {
+        poll            : 1000,
+        aggregateTimeout: 300,
+      };
+
+      return config;
+
+    },
     webpack: (config) => {
 
     // Fixes npm packages that depend on `fs` module

@@ -35,6 +35,7 @@ services:
     volumes:
       - ./client:/home/react/client
       - /home/react/client/node_modules
+      - /home/react/client/.next
     networks:
       - containers_net
 

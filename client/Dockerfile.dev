@@ -8,7 +8,6 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
 RUN apt-get update \
   && apt-get install -y yarn
 
-
 # Create directory 
 RUN mkdir -p /home/react/client
 WORKDIR /home/react/client
