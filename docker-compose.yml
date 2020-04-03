@@ -15,8 +15,8 @@ services:
       - "88:5000"
       - "9229:9229"
     volumes:
-      - ./app:/home/app
-      - /home/app/node_modules
+      - ./app:/home/node/app
+      - /home/node/app/node_modules
     networks:
       - containers_net
 
@@ -33,9 +33,9 @@ services:
     ports:
       - "80:3000"
     volumes:
-      - ./client:/home/app
-      - /home/app/node_modules
-      - /home/app/.next
+      - ./client:/home/node/app
+      - /home/node/app/node_modules
+      - /home/node/app/.next
     networks:
       - containers_net
 
@@ -64,9 +64,6 @@ services:
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      # PG_PRIMARY_USER: ${DB_USER}
-      # PG_PRIMARY_PASSWORD: ${DB_PASSWORD}
-      # PG_ROOT_PASSWORD: ${DB_PASSWORD}
       PG_PRIMARY_PORT: ${DB_PORT}
       POSTGRES_DB: ${DB_DATABASE}
       PGDATA: /data/postgres

@@ -1,17 +1,39 @@
 FROM node:13 as builder
 
+# Update container
 RUN apt-get update
 
-# Create directory 
-WORKDIR /home/app
+# Tiny allows to gracefully stop node process
+ENV TINI_VERSION v0.18.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
 
-# Install npm dependencies
-COPY package.json package-lock.json* yarn.lock* /home/app/
+# Set environement to devellopment
+ENV NODE_ENV=devellopment
+
+# Create node directory 
+# (we usually like to have node modules one folder up but it is not possible with next)
+WORKDIR /home/node/app
+
+# Copy npm dependencies
+COPY package*.json yarn.lock* ./
+
+# Create app directory to contain the app and set permision for node user
+RUN mkdir app && chown -R node:node .
+
+# Change the user to be node
+USER node
+
+# Install dependencies
 RUN yarn install
 
-# Copy existing local files into container, and set permission
-COPY . /home/app
+# This takes care of some problems related to scss in node with next
+RUN npm rebuild node-sass
 
-EXPOSE 5000
+# Copy existing local files into container, and set permission to node user
+COPY --chown=node:node  . .
+
+# Tiny entrypoint
+ENTRYPOINT ["/tini", "--"]
 
 CMD [ "yarn", "dev" ]
