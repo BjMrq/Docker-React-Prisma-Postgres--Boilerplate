@@ -1,23 +1,16 @@
-FROM node:latest as builder
+FROM node:13 as builder
 
-# Install yarn 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-  && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt-get update \
-  && apt-get install -y yarn
+RUN apt-get update
 
 # Create directory 
-RUN mkdir -p /home/react/client
-WORKDIR /home/react/client
+WORKDIR /home/app
 
 # Install npm dependencies
-COPY package.json package-lock.json* yarn.lock* /home/react/client/
+COPY package.json package-lock.json* yarn.lock* /home/app/
 RUN yarn install
 
 # Copy existing local files into container, and set permission
-COPY . /home/react/client
+COPY . /home/app
 
 EXPOSE 5000
 
