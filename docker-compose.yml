@@ -5,7 +5,6 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.dev
-    container_name: node-${APP_NAME}
     restart: on-failure
     depends_on:
       - "db"
@@ -17,15 +16,12 @@ services:
     volumes:
       - ./app:/home/node/app
       - /home/node/app/node_modules
-    networks:
-      - containers_net
 
   #React Client
   client:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
-    container_name: client-${APP_NAME}
     restart: on-failure
     depends_on:
       - "app"
@@ -36,15 +32,12 @@ services:
       - ./client:/home/node/app
       - /home/node/app/node_modules
       - /home/node/app/.next
-    networks:
-      - containers_net
 
   #Prisma Service for graphql
   prisma:
     build:
       context: ./app/prisma
       dockerfile: Dockerfile.dev
-    container_name: prisma-${APP_NAME}
     restart: on-failure
     depends_on:
       - "db"
@@ -53,13 +46,10 @@ services:
     environment:
       PRISMA_MANAGEMENT_API_JWT_SECRET: ${PRISMA_SECRET}
       PRISMA_CONFIG_PATH: home/prisma-config.yml
-    networks:
-      - containers_net
 
   #Postgres DB
   db:
     image: "postgres:12"
-    container_name: postgres-${APP_NAME}
     restart: on-failure
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -71,12 +61,9 @@ services:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
-    networks:
-      - containers_net
 
   #PGadmin service
   pgadmin:
-    container_name: pgadmin-${APP_NAME}
     image: dpage/pgadmin4:latest
     restart: on-failure
     depends_on:
@@ -88,13 +75,6 @@ services:
       - pgadmin:/var/lib/pgadmin
     ports:
       - "8080:80"
-    networks:
-      - containers_net
-
-#Docker Networks
-networks:
-  containers_net:
-    driver: bridge
 
 #Volumes
 volumes:
