@@ -15,7 +15,7 @@ ENV NODE_ENV=devellopment
 RUN yarn global add prisma
 
 # Create node directory 
-WORKDIR /home/node
+WORKDIR /node
 
 # Copy npm dependencies
 COPY package*.json yarn.lock* ./
@@ -30,7 +30,7 @@ USER node
 RUN yarn install
 
 # Change for app directory
-WORKDIR /home/node/app
+WORKDIR /node/app
 
 # Copy existing local files into container, and set permission to node user
 COPY --chown=node:node  . .
